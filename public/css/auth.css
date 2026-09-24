@@ -1,0 +1,250 @@
+/* ================================================
+   SIPP — Auth CSS (Login Page)
+   ================================================ */
+
+.login-wrapper {
+    display: flex;
+    width: 860px;
+    min-height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+
+/* ========================
+   Body override untuk login
+======================== */
+body.auth-page {
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========================
+   Panel Kiri — Branding
+======================== */
+.login-brand {
+    width: 360px;
+    background: linear-gradient(160deg, #0a7a5e 0%, #085041 50%, #1D9E75 100%);
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.brand-logo {
+    width: 70px;
+    height: 70px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    border: 2px solid rgba(255,255,255,0.3);
+    margin-bottom: 28px;
+}
+
+.brand-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.brand-sub {
+    font-size: 13px;
+    opacity: 0.75;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.brand-features { list-style: none; }
+
+.brand-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 12px;
+}
+
+.brand-features li i {
+    width: 20px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* ========================
+   Panel Kanan — Form
+======================== */
+.login-form-panel {
+    flex: 1;
+    background: white;
+    padding: 50px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2e3b;
+    margin-bottom: 6px;
+}
+
+.form-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 32px;
+}
+
+/* Input */
+.input-wrapper { position: relative; }
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 11px 14px 11px 40px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #2c3e50;
+    font-family: inherit;
+    transition: all 0.2s;
+    background: #fafafa;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #1D9E75;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.1);
+}
+
+.form-control.is-invalid {
+    border-color: #e74c3c;
+    background: #fff8f8;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    cursor: pointer;
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.toggle-password:hover { color: #666; }
+
+/* Remember me */
+.form-remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.form-remember input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #1D9E75;
+    cursor: pointer;
+}
+
+.form-remember label {
+    font-size: 13px;
+    color: #666;
+    cursor: pointer;
+}
+
+/* Button Login */
+.btn-login {
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(135deg, #0a7a5e, #1D9E75);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, #085041, #0a7a5e);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(10,122,94,0.3);
+}
+
+.btn-login:active { transform: translateY(0); }
+
+/* Alert error */
+.alert-error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Footer */
+.login-footer {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* ========================
+   Responsive
+======================== */
+@media (max-width: 768px) {
+    .login-wrapper {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        flex-direction: column;
+    }
+
+    .login-brand {
+        width: 100%;
+        padding: 32px 28px;
+    }
+
+    .brand-features { display: none; }
+
+    .login-form-panel { padding: 32px 28px; }
+}

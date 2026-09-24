@@ -1,0 +1,465 @@
+/* ================================================
+   SIPP — Rekap Perkara CSS
+   Hanya class yang tidak ada di global.css
+   ================================================ */
+
+/* ========================
+   Mode Tabs
+======================== */
+.mode-tabs {
+    display: inline-flex;
+    background: #f3f5f7;
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+    margin-bottom: 14px;
+}
+
+.mode-tab {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #777;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.18s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.mode-tab:hover { color: #1D9E75; background: rgba(29,158,117,0.06); }
+
+.mode-tab.active {
+    background: white;
+    color: #0a7a5e;
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ========================
+   Filter inputs row
+======================== */
+.filter-inputs-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-input-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.filter-range-inner {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.range-sep {
+    font-size: 15px;
+    color: #bbb;
+    padding-bottom: 7px;
+}
+
+.filter-info-bar {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #f2f2f2;
+    font-size: 12.5px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-info-bar i { color: #1D9E75; }
+.filter-info-bar strong { color: #0a7a5e; }
+
+/* ========================
+   Summary Cards
+======================== */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.scard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    padding: 14px;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border-top: 3px solid transparent;
+}
+
+.scard:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+
+.scard-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+}
+
+.scard-body { flex: 1; min-width: 0; }
+.scard-num { font-size: 22px; font-weight: 700; line-height: 1.1; letter-spacing: -0.5px; }
+.scard-label { font-size: 11px; color: #888; font-weight: 500; margin-top: 2px; }
+.scard-pct { font-size: 10.5px; font-weight: 600; margin-top: 1px; }
+
+.scard-green  { border-top-color: #1D9E75; }
+.scard-green  .scard-icon { background: #e8f5ee; color: #0a7a5e; }
+.scard-green  .scard-num  { color: #0a7a5e; }
+
+.scard-amber  { border-top-color: #f39c12; }
+.scard-amber  .scard-icon { background: #fef5e4; color: #d68910; }
+.scard-amber  .scard-num  { color: #d68910; }
+.scard-amber  .scard-pct  { color: #d68910; }
+
+.scard-blue   { border-top-color: #3498db; }
+.scard-blue   .scard-icon { background: #eaf4fc; color: #2980b9; }
+.scard-blue   .scard-num  { color: #2980b9; }
+.scard-blue   .scard-pct  { color: #2980b9; }
+
+.scard-teal   { border-top-color: #27ae60; }
+.scard-teal   .scard-icon { background: #eafaf1; color: #27ae60; }
+.scard-teal   .scard-num  { color: #27ae60; }
+
+.scard-indigo { border-top-color: #6c5ce7; }
+.scard-indigo .scard-icon { background: #f0eeff; color: #6c5ce7; }
+.scard-indigo .scard-num  { color: #6c5ce7; }
+
+.scard-red    { border-top-color: #e74c3c; }
+.scard-red    .scard-icon { background: #fdf0ee; color: #e74c3c; }
+.scard-red    .scard-num  { color: #e74c3c; }
+
+/* ========================
+   Section header
+======================== */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.section-title i { color: #1D9E75; }
+.section-sub { font-size: 12px; color: #aaa; }
+
+/* ========================
+   Jenis Cards Grid
+======================== */
+.jenis-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.jcard {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.jcard:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(0,0,0,0.08); border-color: #c5e8da; }
+
+.jcard-num { font-size: 22px; font-weight: 700; color: #0a7a5e; letter-spacing: -0.5px; line-height: 1; }
+.jcard-label { font-size: 11px; color: #555; font-weight: 500; margin-top: 4px; line-height: 1.3; }
+.jcard-pct { font-size: 10px; color: #aaa; margin-top: 2px; }
+.jcard-bar { height: 3px; background: #f0f0f0; border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.jcard-bar-fill { height: 100%; background: linear-gradient(90deg, #1D9E75, #0a7a5e); border-radius: 2px; }
+
+/* ========================
+   3 Charts Row — compact
+======================== */
+.charts-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.chart-compact {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    padding: 14px 16px;
+}
+
+.chart-compact-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+/* ========================
+   Data Card
+======================== */
+.data-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.data-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid #eee;
+    background: #fafbfc;
+}
+
+.data-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.data-card-title i { color: #1D9E75; }
+
+/* ========================
+   Table search bar + per-page
+======================== */
+.table-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid #eee;
+    background: #fafbfc;
+}
+
+.search-box { position: relative; flex: 1; }
+
+.search-box i {
+    position: absolute;
+    left: 10px; top: 50%;
+    transform: translateY(-50%);
+    color: #bbb; font-size: 13px;
+    pointer-events: none;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 7px 10px 7px 32px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+}
+
+.search-box input:focus {
+    border-color: #1D9E75;
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.08);
+}
+
+.per-page-select {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 12px;
+    font-family: inherit;
+    color: #555;
+    background: white;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.per-page-select:focus { border-color: #1D9E75; }
+
+/* ========================
+   Sort link di header tabel
+======================== */
+.sort-link {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.sort-link:hover { color: #1D9E75; }
+
+.sort-icon {
+    font-size: 10px;
+    color: #ccc;
+    transition: color 0.15s;
+}
+
+.sort-icon.active { color: #1D9E75; }
+
+/* ========================
+   Pagination simpel
+======================== */
+.pagination-simple {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid #eee;
+    background: #fafbfc;
+}
+
+.pagination-info {
+    font-size: 12px;
+    color: #999;
+}
+
+.pagination-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border-radius: 6px;
+    border: 1px solid #e8e8e8;
+    background: white;
+    color: #555;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.15s;
+}
+
+.pg-btn:hover { border-color: #1D9E75; color: #1D9E75; }
+
+.pg-btn.pg-active {
+    background: #1D9E75;
+    border-color: #1D9E75;
+    color: white;
+    font-weight: 600;
+}
+
+.pg-btn.pg-disabled {
+    color: #ddd;
+    border-color: #f0f0f0;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ========================
+   Detail page
+======================== */
+.detail-header-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+}
+
+.detail-header-info { flex: 1; }
+.detail-header-title { font-size: 16px; font-weight: 700; color: #2c3e50; }
+.detail-header-periode { font-size: 12px; color: #999; margin-top: 3px; display: flex; align-items: center; gap: 5px; }
+
+.detail-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.detail-search-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+/* ========================
+   Total badge
+======================== */
+.total-badge {
+    background: #e8f5ee;
+    color: #0a7a5e;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* ========================
+   Badge tambahan
+======================== */
+.badge-jenis { background: #eef7ff; color: #1a6fb5; }
+
+/* ========================
+   Table utilities
+======================== */
+.nowrap      { white-space: nowrap; }
+.fw-500      { font-weight: 500; }
+.td-truncate { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ========================
+   Responsive
+======================== */
+@media (max-width: 1280px) {
+    .summary-cards { grid-template-columns: repeat(3, 1fr); }
+    .charts-row { grid-template-columns: 1fr 1fr; }
+    .charts-row .chart-compact:first-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 768px) {
+    .summary-cards { grid-template-columns: repeat(2, 1fr); }
+    .jenis-cards-grid { grid-template-columns: repeat(2, 1fr); }
+    .charts-row { grid-template-columns: 1fr; }
+    .filter-inputs-row { flex-direction: column; align-items: stretch; }
+    .filter-range-inner { flex-direction: column; }
+    .detail-toolbar { flex-direction: column; align-items: stretch; }
+    .mode-tabs { width: 100%; }
+    .mode-tab { flex: 1; justify-content: center; }
+    .pagination-simple { flex-direction: column; gap: 8px; }
+}

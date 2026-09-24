@@ -1,0 +1,424 @@
+/* ================================================
+   Penilaian Kinerja — CSS
+   ================================================ */
+
+/* Filter Card */
+.pk-filter {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 22px;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.pk-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Info bar */
+.pk-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    border-radius: 10px;
+    padding: 12px 18px;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #555;
+    flex-wrap: wrap;
+}
+
+.pk-info-item { display: flex; align-items: center; gap: 6px; }
+.pk-info-item strong { color: #2c3e50; font-weight: 600; }
+.pk-info-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ddd;
+}
+
+/* Nilai Akhir Banner */
+.pk-nilai-banner {
+    background: linear-gradient(120deg, #0a7a5e 0%, #1D9E75 100%);
+    border-radius: 12px;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pk-nilai-label {
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.pk-nilai-score {
+    color: white;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.pk-nilai-komponen {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.pk-komp-item {
+    text-align: center;
+    min-width: 80px;
+}
+
+.pk-komp-val {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    line-height: 1;
+}
+
+.pk-komp-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 3px;
+}
+
+.pk-komp-item.neg .pk-komp-val { color: #fca5a5; }
+
+/* ================================================
+   TABLE WRAPPER
+   ================================================ */
+.pk-table-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+.pk-table-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pk-table-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.pk-table-sub {
+    font-size: 12px;
+    color: #999;
+}
+
+.pk-table-scroll {
+    overflow-x: auto;
+}
+
+.pk-table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+/* Header rows */
+.pk-table thead tr:first-child th { border-top: none; }
+
+.pk-table th {
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid #eee;
+    white-space: nowrap;
+    vertical-align: middle;
+    line-height: 1.3;
+}
+
+.pk-table th.th-kinerja    { background: #E1F5EE; color: #085041; }
+.pk-table th.th-kepatuhan  { background: #EFF6FF; color: #1e40af; }
+.pk-table th.th-input      { background: #dbeafe; color: #1e40af; }
+.pk-table th.th-kelengkapan{ background: #F5F3FF; color: #3730a3; }
+.pk-table th.th-kesesuaian { background: #FEF2F2; color: #991b1b; }
+.pk-table th.th-nilai      { background: #E1F5EE; color: #085041; }
+.pk-table th.th-info       { background: #f8fafb; color: #5a6a7a; }
+
+.pk-table th .bobot {
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.75;
+    display: block;
+    margin-top: 1px;
+}
+
+/* ================================================
+   CARD GRID INDIKATOR
+   ================================================ */
+.pk-card-section {
+    margin-bottom: 20px;
+}
+
+.pk-card-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.pk-card-group {
+    margin-bottom: 14px;
+}
+
+.pk-card-group-label {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.pk-card-group-label.cg-kinerja     { background:#E1F5EE; color:#085041; }
+.pk-card-group-label.cg-input       { background:#dbeafe; color:#1e40af; }
+.pk-card-group-label.cg-kepatuhan   { background:#EFF6FF; color:#1e40af; }
+.pk-card-group-label.cg-kelengkapan { background:#F5F3FF; color:#3730a3; }
+.pk-card-group-label.cg-kesesuaian  { background:#FEF2F2; color:#991b1b; }
+
+.pk-card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Card style A — gepeng, count atas, persen bawah */
+.pk-ind-card {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 7px 12px;
+    background: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    text-decoration: none;
+    min-width: 90px;
+    transition: all 0.15s;
+    cursor: pointer;
+}
+
+.pk-ind-card:hover {
+    border-color: #1D9E75;
+    box-shadow: 0 2px 8px rgba(10,122,94,0.12);
+    transform: translateY(-1px);
+}
+
+.pk-ind-card.cg-kinerja:hover     { border-color: #1D9E75; }
+.pk-ind-card.cg-input:hover       { border-color: #3b82f6; }
+.pk-ind-card.cg-kepatuhan:hover   { border-color: #3b82f6; }
+.pk-ind-card.cg-kelengkapan:hover { border-color: #7c3aed; }
+.pk-ind-card.neg:hover            { border-color: #b91c1c; }
+
+.pk-ind-label {
+    font-size: 11px;
+    color: #7f8c8d;
+    font-weight: 500;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.pk-ind-bobot {
+    font-size: 10px;
+    color: #bbb;
+    font-weight: 400;
+    flex-shrink: 0;
+}
+
+.pk-ind-count {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2c3e50;
+    line-height: 1.2;
+}
+
+.pk-ind-pct {
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1;
+}
+
+.pk-ind-card.neg .pk-ind-count { color: #b91c1c; }
+.pk-ind-card.neg .pk-ind-pct   { color: #fca5a5; }
+.pk-ind-card.neg:hover         { box-shadow: 0 2px 8px rgba(185,28,28,0.12); }
+
+/* Sticky kolom pertama */
+.pk-table th.sticky,
+.pk-table td.sticky {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: #f8fafb;
+    border-right: 2px solid #e0e0e0;
+}
+
+.pk-table thead th.sticky { z-index: 3; }
+
+/* Body rows */
+.pk-table tbody td {
+    padding: 0;
+    border: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+/* Cell style A — count atas, persen bawah */
+.pk-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 5px 9px;
+    text-decoration: none;
+    transition: background 0.15s;
+    min-width: 72px;
+}
+
+.pk-cell:hover { background: #f0fdf8; }
+
+.pk-cell .c-count {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2c3e50;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.pk-cell .c-pct {
+    font-size: 10px;
+    color: #94a3b8;
+    line-height: 1.2;
+}
+
+/* Negatif */
+.pk-cell.neg .c-count { color: #b91c1c; }
+.pk-cell.neg .c-pct   { color: #fca5a5; }
+.pk-cell.neg:hover    { background: #fff5f5; }
+
+/* Cell info (label kiri) */
+.pk-cell-info {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #444;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Nilai Akhir cell */
+td.td-nilai-akhir {
+    background: #E1F5EE;
+    text-align: center;
+}
+
+.pk-cell-nilai {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    min-width: 68px;
+}
+
+.pk-cell-nilai .v-score {
+    font-size: 14px;
+    font-weight: 600;
+    color: #085041;
+    line-height: 1.2;
+}
+
+.pk-cell-nilai .v-label {
+    font-size: 10px;
+    color: #0a7a5e;
+    opacity: 0.7;
+}
+
+/* Zebra hover */
+.pk-table tbody tr:hover td { background: #fafffe; }
+.pk-table tbody tr:hover td.sticky { background: #f0f7f4; }
+.pk-table tbody tr:hover td.td-nilai-akhir { background: #c8eee0; }
+
+/* ================================================
+   LOADING OVERLAY
+   ================================================ */
+#pk-loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+#pk-loading-overlay.active {
+    display: flex;
+}
+
+.pk-loading-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    padding: 28px 36px;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border: 1px solid #eee;
+}
+
+.pk-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e0f0ea;
+    border-top-color: #1D9E75;
+    border-radius: 50%;
+    animation: pk-spin 0.7s linear infinite;
+}
+
+@keyframes pk-spin {
+    to { transform: rotate(360deg); }
+}
+
+.pk-loading-text {
+    font-size: 13px;
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+/* Sticky nilai akhir di kanan */
+td.td-nilai-akhir {
+    position: sticky;
+    right: 0;
+    z-index: 2;
+    background: #E1F5EE;
+    box-shadow: -2px 0 6px rgba(0,0,0,0.06);
+}
