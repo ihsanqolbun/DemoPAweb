@@ -25,7 +25,7 @@ class PihakController extends Controller
             ->select('p.id', 'p.nama', 'p.alamat', 'p.tempat_lahir', 'p.tanggal_lahir', 'p.pekerjaan', 'p.keterangan')
             ->whereExists(function ($q) {
                 $q->select(DB::raw(1))
-                  ->from(DB::connection('aps_badilag')->getDatabaseName() . '.eac_validasi as ev')
+                  ->from(DB::connection('dummy_aps')->getDatabaseName() . '.eac_validasi as ev')
                   ->whereColumn('ev.perkara_id', 'p.id');
             });
 
@@ -142,21 +142,21 @@ class PihakController extends Controller
     public function destroy(string $id)
     {
         // Cek dulu apakah ada di eac_validasi
-        $exists = DB::connection('aps_badilag')->table('eac_validasi')
+        $exists = DB::connection('dummy_aps')->table('eac_validasi')
             ->where('perkara_id', $id)->exists();
 
         if (!$exists) {
             return redirect()->route('pihak.index')
-                ->with('error', 'Data tidak ditemukan di aps_badilag.eac_validasi.');
+                ->with('error', 'Data tidak ditemukan di dummy_aps.eac_validasi.');
         }
 
         try {
             // Hapus HANYA dari eac_validasi — data pihak di sipp tetap
-            DB::connection('aps_badilag')->table('eac_validasi')
+            DB::connection('dummy_aps')->table('eac_validasi')
                 ->where('perkara_id', $id)->delete();
 
             return redirect()->route('pihak.index')
-                ->with('success', 'Data berhasil dihapus dari aps_badilag.eac_validasi. Data pihak di sipp tetap tersimpan.');
+                ->with('success', 'Data berhasil dihapus dari dummy_aps.eac_validasi. Data pihak di sipp tetap tersimpan.');
 
         } catch (\Exception $e) {
             return redirect()->route('pihak.index')
@@ -186,7 +186,7 @@ class PihakController extends Controller
         $inPihak2 = DB::connection('mysql')->table('perkara_pihak2')
             ->where('pihak_id', $id)->exists();
 
-        $inEacValidasi = DB::connection('aps_badilag')->table('eac_validasi')
+        $inEacValidasi = DB::connection('dummy_aps')->table('eac_validasi')
             ->where('perkara_id', $id)->exists();
 
         return view('pihak.edit', [

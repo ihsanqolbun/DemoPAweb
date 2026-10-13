@@ -96,7 +96,7 @@
                             </a>
                             {{-- Tombol Hapus — uncomment kalau mau aktifkan
                             <form method="POST" action="{{ route('pihak.destroy', $row->id) }}"
-                                  onsubmit="return confirm('Hapus data ini dari aps_badilag.eac_validasi?')">
+                                  onsubmit="return confirm('Hapus data ini dari dummy_aps.eac_validasi?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn-delete-sm">

@@ -40,7 +40,7 @@
         </div>
         <div class="tabel-info-item {{ $inEacValidasi ? 'found' : 'notfound' }}">
             <i class="fas fa-{{ $inEacValidasi ? 'check-circle' : 'times-circle' }}"></i>
-            <span>aps_badilag.eac_validasi</span>
+            <span>dummy_aps.eac_validasi</span>
         </div>
     </div>
     <div class="tabel-info-note">
