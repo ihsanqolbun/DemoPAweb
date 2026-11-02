@@ -12,22 +12,30 @@ class PihakController extends Controller
         'nama', 'alamat', 'tempat_lahir', 'tanggal_lahir', 'pekerjaan', 'keterangan'
     ];
 
+    private function clearPihakCache(): void
+    {
+        \Illuminate\Support\Facades\Cache::forget('pihak_valid_ids');
+    }
+
     // ================================================
     // Index — list pihak yang ada di eac_validasi
     // ================================================
     public function index(Request $request)
     {
         $search  = $request->get('search', '');
-        $perPage = in_array((int)$request->get('per_page'), [10, 25, 50, 100])
+        $perPage = in_array((int)$request->get('per_page'), [10, 25, 50])
             ? (int)$request->get('per_page') : 10;
+
+        $validPihakIds = \Illuminate\Support\Facades\Cache::remember('pihak_valid_ids', 600, function () {
+            return DB::connection('dummy_aps')->table('eac_validasi')
+                ->pluck('perkara_id')
+                ->unique()
+                ->all();
+        });
 
         $query = DB::connection('mysql')->table('pihak as p')
             ->select('p.id', 'p.nama', 'p.alamat', 'p.tempat_lahir', 'p.tanggal_lahir', 'p.pekerjaan', 'p.keterangan')
-            ->whereExists(function ($q) {
-                $q->select(DB::raw(1))
-                  ->from(DB::connection('dummy_aps')->getDatabaseName() . '.eac_validasi as ev')
-                  ->whereColumn('ev.perkara_id', 'p.id');
-            });
+            ->whereIn('p.id', $validPihakIds);
 
         if ($search) {
             $like = '%' . $search . '%';
@@ -121,6 +129,7 @@ class PihakController extends Controller
             }
 
             DB::commit();
+            $this->clearPihakCache();
 
             $addedTables = ['pihak'];
             if ($request->has('insert_perkara_pihak1')) $addedTables[] = 'perkara_pihak1';
@@ -155,6 +164,8 @@ class PihakController extends Controller
             DB::connection('dummy_aps')->table('eac_validasi')
                 ->where('perkara_id', $id)->delete();
 
+            $this->clearPihakCache();
+
             return redirect()->route('pihak.index')
                 ->with('success', 'Data berhasil dihapus dari dummy_aps.eac_validasi. Data pihak di sipp tetap tersimpan.');
 
@@ -179,20 +190,19 @@ class PihakController extends Controller
                 ->with('error', 'Data pihak tidak ditemukan.');
         }
 
-        // Cek keberadaan di tabel-tabel terkait
-        $inPihak1 = DB::connection('mysql')->table('perkara_pihak1')
-            ->where('pihak_id', $id)->exists();
-
-        $inPihak2 = DB::connection('mysql')->table('perkara_pihak2')
-            ->where('pihak_id', $id)->exists();
+        $checkExist = DB::connection('mysql')->selectOne("
+            SELECT
+                EXISTS(SELECT 1 FROM perkara_pihak1 WHERE pihak_id = ?) as in_pihak1,
+                EXISTS(SELECT 1 FROM perkara_pihak2 WHERE pihak_id = ?) as in_pihak2
+        ", [$id, $id]);
 
         $inEacValidasi = DB::connection('dummy_aps')->table('eac_validasi')
             ->where('perkara_id', $id)->exists();
 
         return view('pihak.edit', [
             'pihak'        => $pihak,
-            'inPihak1'     => $inPihak1,
-            'inPihak2'     => $inPihak2,
+            'inPihak1'     => (bool) $checkExist->in_pihak1,
+            'inPihak2'     => (bool) $checkExist->in_pihak2,
             'inEacValidasi'=> $inEacValidasi,
         ]);
     }
@@ -232,14 +242,21 @@ class PihakController extends Controller
             'diperbaharui_tanggal' => now(),
         ];
 
+        $checkExist = DB::connection('mysql')->selectOne("
+            SELECT
+                EXISTS(SELECT 1 FROM perkara_pihak1 WHERE pihak_id = ?) as in_pihak1,
+                EXISTS(SELECT 1 FROM perkara_pihak2 WHERE pihak_id = ?) as in_pihak2
+        ", [$id, $id]);
+
+        $inPihak1 = (bool) $checkExist->in_pihak1;
+        $inPihak2 = (bool) $checkExist->in_pihak2;
+
         DB::beginTransaction();
         try {
             // 1. Update tabel pihak (selalu)
             DB::connection('mysql')->table('pihak')->where('id', $id)->update($data);
 
             // 2. Update perkara_pihak1 — hanya kalau ada record dengan pihak_id ini
-            $inPihak1 = DB::connection('mysql')->table('perkara_pihak1')
-                ->where('pihak_id', $id)->exists();
             if ($inPihak1) {
                 DB::connection('mysql')->table('perkara_pihak1')
                     ->where('pihak_id', $id)
@@ -252,8 +269,6 @@ class PihakController extends Controller
             }
 
             // 3. Update perkara_pihak2 — hanya kalau ada record dengan pihak_id ini
-            $inPihak2 = DB::connection('mysql')->table('perkara_pihak2')
-                ->where('pihak_id', $id)->exists();
             if ($inPihak2) {
                 DB::connection('mysql')->table('perkara_pihak2')
                     ->where('pihak_id', $id)
@@ -266,6 +281,7 @@ class PihakController extends Controller
             }
 
             DB::commit();
+            $this->clearPihakCache();
 
             $updatedTables = ['pihak'];
             if ($inPihak1) $updatedTables[] = 'perkara_pihak1';

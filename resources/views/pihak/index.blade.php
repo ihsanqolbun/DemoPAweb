@@ -35,7 +35,7 @@
            class="btn btn-secondary btn-sm"><i class="fas fa-times"></i></a>
         @endif
         <select name="per_page" class="per-page-select" onchange="this.form.submit()">
-            @foreach([10, 25, 50, 100] as $pp)
+            @foreach([10, 25, 50] as $pp)
             <option value="{{ $pp }}" {{ $perPage == $pp ? 'selected' : '' }}>{{ $pp }} / hal</option>
             @endforeach
         </select>

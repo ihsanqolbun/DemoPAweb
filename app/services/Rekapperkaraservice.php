@@ -98,64 +98,68 @@ class RekapPerkaraService
     // ================================================
     public function getStats(string $mulai, string $akhir): array
     {
-        $stats = DB::selectOne("
-            SELECT
-                COUNT(DISTINCT p.perkara_id) as total_masuk,
-                SUM(CASE WHEN pe.efiling_id IS NOT NULL AND pe.efiling_id != '' THEN 1 ELSE 0 END) as e_court,
-                SUM(CASE WHEN pe.efiling_id IS NULL OR pe.efiling_id = '' THEN 1 ELSE 0 END) as manual,
-                SUM(CASE WHEN pp.tanggal_minutasi IS NOT NULL AND pp.tanggal_minutasi != '' THEN 1 ELSE 0 END) as minutasi,
-                SUM(CASE
-                    WHEN (pp.tanggal_minutasi IS NULL OR pp.tanggal_minutasi = '')
-                     AND pp.tanggal_putusan IS NOT NULL AND pp.tanggal_putusan != '' THEN 1
-                    ELSE 0 END) as putus,
-                SUM(CASE
-                    WHEN (pp.tanggal_putusan  IS NULL OR pp.tanggal_putusan  = '')
-                     AND (pp.tanggal_minutasi IS NULL OR pp.tanggal_minutasi = '') THEN 1
-                    ELSE 0 END) as dalam_proses
-            FROM perkara p
-            LEFT JOIN perkara_efiling_id pe ON p.perkara_id = pe.perkara_id
-            LEFT JOIN perkara_putusan pp    ON p.perkara_id = pp.perkara_id
-            WHERE p.tanggal_pendaftaran BETWEEN ? AND ?
-        ", [$mulai, $akhir]);
+        $cacheKey = 'rekap_stats_' . $mulai . '_' . $akhir;
 
-        $jenisRaw = DB::select("
-            SELECT jenis_perkara_nama, COUNT(*) as jumlah
-            FROM perkara
-            WHERE tanggal_pendaftaran BETWEEN ? AND ?
-              AND jenis_perkara_nama IS NOT NULL AND jenis_perkara_nama != ''
-            GROUP BY jenis_perkara_nama
-            ORDER BY jumlah DESC
-        ", [$mulai, $akhir]);
+        return \Illuminate\Support\Facades\Cache::remember($cacheKey, 1800, function () use ($mulai, $akhir) {
+            $stats = DB::selectOne("
+                SELECT
+                    COUNT(DISTINCT p.perkara_id) as total_masuk,
+                    SUM(CASE WHEN pe.efiling_id IS NOT NULL AND pe.efiling_id != '' THEN 1 ELSE 0 END) as e_court,
+                    SUM(CASE WHEN pe.efiling_id IS NULL OR pe.efiling_id = '' THEN 1 ELSE 0 END) as manual,
+                    SUM(CASE WHEN pp.tanggal_minutasi IS NOT NULL AND pp.tanggal_minutasi != '' THEN 1 ELSE 0 END) as minutasi,
+                    SUM(CASE
+                        WHEN (pp.tanggal_minutasi IS NULL OR pp.tanggal_minutasi = '')
+                         AND pp.tanggal_putusan IS NOT NULL AND pp.tanggal_putusan != '' THEN 1
+                        ELSE 0 END) as putus,
+                    SUM(CASE
+                        WHEN (pp.tanggal_putusan  IS NULL OR pp.tanggal_putusan  = '')
+                         AND (pp.tanggal_minutasi IS NULL OR pp.tanggal_minutasi = '') THEN 1
+                        ELSE 0 END) as dalam_proses
+                FROM perkara p
+                LEFT JOIN perkara_efiling_id pe ON p.perkara_id = pe.perkara_id
+                LEFT JOIN perkara_putusan pp    ON p.perkara_id = pp.perkara_id
+                WHERE p.tanggal_pendaftaran BETWEEN ? AND ?
+            ", [$mulai, $akhir]);
 
-        $kategoriCount = [];
-        foreach ($jenisRaw as $row) {
-            $slug = self::resolveKategori($row->jenis_perkara_nama);
-            $kategoriCount[$slug] = ($kategoriCount[$slug] ?? 0) + (int) $row->jumlah;
-        }
-        arsort($kategoriCount);
+            $jenisRaw = DB::select("
+                SELECT jenis_perkara_nama, COUNT(*) as jumlah
+                FROM perkara
+                WHERE tanggal_pendaftaran BETWEEN ? AND ?
+                  AND jenis_perkara_nama IS NOT NULL AND jenis_perkara_nama != ''
+                GROUP BY jenis_perkara_nama
+                ORDER BY jumlah DESC
+            ", [$mulai, $akhir]);
 
-        $jenisCards = [];
-        foreach ($kategoriCount as $slug => $jumlah) {
-            $jenisCards[] = [
-                'slug'   => $slug,
-                'label'  => self::$kategoriLabels[$slug] ?? $slug,
-                'jumlah' => $jumlah,
+            $kategoriCount = [];
+            foreach ($jenisRaw as $row) {
+                $slug = self::resolveKategori($row->jenis_perkara_nama);
+                $kategoriCount[$slug] = ($kategoriCount[$slug] ?? 0) + (int) $row->jumlah;
+            }
+            arsort($kategoriCount);
+
+            $jenisCards = [];
+            foreach ($kategoriCount as $slug => $jumlah) {
+                $jenisCards[] = [
+                    'slug'   => $slug,
+                    'label'  => self::$kategoriLabels[$slug] ?? $slug,
+                    'jumlah' => $jumlah,
+                ];
+            }
+
+            $totalMasuk = (int) ($stats->total_masuk ?? 0);
+
+            return [
+                'totalMasuk'     => $totalMasuk,
+                'eCourt'         => (int) ($stats->e_court ?? 0),
+                'manual'         => (int) ($stats->manual ?? 0),
+                'putus'          => (int) ($stats->putus ?? 0),
+                'minutasi'       => (int) ($stats->minutasi ?? 0),
+                'dalamProses'    => (int) ($stats->dalam_proses ?? 0),
+                'jenisCards'     => $jenisCards,
+                'jenisChartData' => array_slice($jenisCards, 0, 10),
+                'jumlahHari'     => Carbon::parse($mulai)->diffInDays(Carbon::parse($akhir)) + 1,
             ];
-        }
-
-        $totalMasuk = (int) ($stats->total_masuk ?? 0);
-
-        return [
-            'totalMasuk'     => $totalMasuk,
-            'eCourt'         => (int) ($stats->e_court ?? 0),
-            'manual'         => (int) ($stats->manual ?? 0),
-            'putus'          => (int) ($stats->putus ?? 0),
-            'minutasi'       => (int) ($stats->minutasi ?? 0),
-            'dalamProses'    => (int) ($stats->dalam_proses ?? 0),
-            'jenisCards'     => $jenisCards,
-            'jenisChartData' => array_slice($jenisCards, 0, 10),
-            'jumlahHari'     => Carbon::parse($mulai)->diffInDays(Carbon::parse($akhir)) + 1,
-        ];
+        });
     }
 
     // ================================================
